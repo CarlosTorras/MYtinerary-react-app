@@ -43,7 +43,9 @@ class Cities extends React.Component {
   render() {
     const { error, isLoaded, cities, citySearch } = this.state;
     let filteredCities = cities.filter(city => {
-      return city.city.toLowerCase().indexOf(citySearch.toLowerCase()) !== -1;
+      return (
+        city.city.toLowerCase().startsWith(citySearch.toLowerCase()) !== false
+      );
     });
     if (error) {
       return <div>Error: {error.message}</div>;

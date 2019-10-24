@@ -19,14 +19,23 @@ router.post("/", (req, res) => {
     city: req.body.city,
     country: req.body.country
   });
-  newCity
-    .save()
-    .then(city => {
-      res.send(city);
-    })
-    .catch(err => {
-      res.status(500).send("Server error");
-    });
+
+  cityModel.find({}).then(files => {
+    for (i = 0; i < files.length; i++) {
+      if (files[i].city == newCity.city) {
+        console.log("this city already exists");
+      } else {
+        newCity
+          .save()
+          .then(city => {
+            res.send(city);
+          })
+          .catch(err => {
+            res.status(500).send("Server error");
+          });
+      }
+    }
+  });
 });
 
 module.exports = router;
