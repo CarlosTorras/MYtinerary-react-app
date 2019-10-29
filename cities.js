@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 /*get all cities*/
-router.get("/all", (req, res) => {
+router.get("/", (req, res) => {
   cityModel
     .find({})
     .then(files => {

@@ -25,3 +25,7 @@ yarn-error.log*
 
 # private information
 keys.js
+
+# Project Data (wireframes...)
+/Data
+

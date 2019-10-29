@@ -1,37 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
+import { fetchCities } from "../store/actions/cityActions";
+import { Link } from "react-router-dom";
 
 class Cities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: false,
-      cities: [],
       citySearch: ""
     };
   }
 
   componentDidMount() {
-    fetch("/cities/all")
-      .then(res => res.json())
-      .then(
-        result => {
-          console.log(result);
-          this.setState({
-            isLoaded: true,
-            cities: result
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+    this.props.fetchCities();
   }
 
   handleChange = e => {
@@ -41,15 +22,15 @@ class Cities extends React.Component {
   };
 
   render() {
-    const { error, isLoaded, cities, citySearch } = this.state;
+    const { citySearch } = this.state;
+    const { cities } = this.props.cities;
+    // console.log(this.props);
     let filteredCities = cities.filter(city => {
       return (
         city.city.toLowerCase().startsWith(citySearch.toLowerCase()) !== false
       );
     });
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    if (filteredCities.length === 0) {
       return <div>Loading...</div>;
     } else {
       return (
@@ -62,17 +43,27 @@ class Cities extends React.Component {
             value={this.state.citySearch}
             onChange={this.handleChange}
           />
-          <ul>
-            {filteredCities.map(city => (
-              <li key={city.city}>
-                {city.city}, {city.country}
-              </li>
-            ))}
-          </ul>
+
+          {filteredCities.map(city => (
+            <Link to={"/itineraries/" + city._id}>
+              <div className="cities-card" key={city._id}>
+                {city.city}
+              </div>
+            </Link>
+          ))}
         </div>
       );
     }
   }
 }
 
-export default Cities;
+const mapStateToProps = state => {
+  return {
+    cities: state.cities
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchCities }
+)(Cities);

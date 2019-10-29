@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cityRouter = require("./cities");
+const itineraryRouter = require("./itineraries");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -20,6 +21,7 @@ mongoose
   .catch(err => console.log(err));
 
 app.use("/cities", cityRouter);
+app.use("/itineraries", itineraryRouter);
 
 app.get("/", (req, res) => {
   res.send({ express: "Hello From Express" });

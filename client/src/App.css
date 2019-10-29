@@ -13,6 +13,8 @@
   flex-grow: 2;
 }
 
+/* Landing Page */
+
 .user-links {
   display: flex;
   justify-content: space-around;
@@ -29,4 +31,26 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+/* Footer */
+
+.home-img {
+  height: 10vmin;
+}
+
+/* CitiesPage */
+
+.cities-card {
+  border: 1px solid black;
+  padding: 5%;
+  margin: 2.5%;
+}
+
+/* MYtinerary page */
+
+.itinerary-card {
+  border: 1px solid black;
+  padding: 5%;
+  margin: 2.5%;
 }
