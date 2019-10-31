@@ -36,16 +36,22 @@ class Cities extends React.Component {
       return (
         <div>
           <h1>Cities Page</h1>
-          <label htmlFor="filter">Filter by City: </label>
-          <input
-            type="text"
-            id="filter"
-            value={this.state.citySearch}
-            onChange={this.handleChange}
-          />
+          <div className="filter">
+            <label htmlFor="filter">Filter by City: </label>
+            <input
+              type="text"
+              id="filter"
+              value={this.state.citySearch}
+              onChange={this.handleChange}
+            />
+          </div>
 
           {filteredCities.map(city => (
-            <Link to={"/itineraries/" + city._id}>
+            <Link
+              className="link"
+              key={city._id}
+              to={"/itineraries/" + city._id}
+            >
               <div className="cities-card" key={city._id}>
                 {city.city}
               </div>

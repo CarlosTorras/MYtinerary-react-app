@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cityRouter = require("./cities");
 const itineraryRouter = require("./itineraries");
+const activityRouter = require("./activities");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -22,6 +23,7 @@ mongoose
 
 app.use("/cities", cityRouter);
 app.use("/itineraries", itineraryRouter);
+app.use("/activities", activityRouter);
 
 app.get("/", (req, res) => {
   res.send({ express: "Hello From Express" });

@@ -4,7 +4,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
 }
@@ -47,10 +47,44 @@
   margin: 2.5%;
 }
 
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.filter {
+  padding: 2.5% 5% 5.5% 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter > label {
+  text-align: left;
+  padding-left: 2.5%;
+}
+
 /* MYtinerary page */
 
 .itinerary-card {
   border: 1px solid black;
-  padding: 5%;
   margin: 2.5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileInfo {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p {
+  text-align: left;
+  padding-left: 5%;
+}
+
+.profilePic > img {
+  width: 20%;
+  height: auto;
 }
