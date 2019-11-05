@@ -13,6 +13,40 @@
   flex-grow: 2;
 }
 
+/* Loading loader */
+
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 6px;
+  box-sizing: border-box;
+  border: 26px solid #cef;
+  border-color: #cef transparent #cef transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
 /* Landing Page */
 
 .user-links {
@@ -43,8 +77,8 @@
 
 .cities-card {
   border: 1px solid black;
-  padding: 5%;
-  margin: 2.5%;
+  padding: 0% 5%;
+  margin: 2.5% 0.5%;
 }
 
 .link {
@@ -65,9 +99,14 @@
 
 /* MYtinerary page */
 
+p {
+  text-align: left;
+  padding-left: 5%;
+}
+
 .itinerary-card {
   border: 1px solid black;
-  margin: 2.5%;
+  margin: 2.5% 0.5%;
   display: flex;
   justify-content: space-between;
 }
@@ -79,12 +118,18 @@
   justify-content: center;
 }
 
-p {
-  text-align: left;
-  padding-left: 5%;
-}
-
 .profilePic > img {
   width: 20%;
   height: auto;
+}
+
+.h4 {
+  margin-block-start: 0%;
+  margin-block-end: 1%;
+  text-align: start;
+}
+
+.moreInfo {
+  display: flex;
+  justify-content: space-around;
 }

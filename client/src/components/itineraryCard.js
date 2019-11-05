@@ -11,10 +11,11 @@ function ItineraryCard(props) {
         <div>{props.itinerary.user_name}</div>
       </div>
       <div className="itinieraryInfo">
-        <h2>{props.itinerary.name}</h2>
-        <div>
-          Likes:{props.itinerary.likes} {props.itinerary.time} hours{" "}
-          {props.itinerary.price}{" "}
+        <h4 className="h4">{props.itinerary.name}</h4>
+        <div className="moreInfo">
+          <span>Likes: {props.itinerary.likes}</span>
+          <span>{props.itinerary.time} hours</span>
+          <span>{props.itinerary.price}</span>
         </div>
         <div>
           {props.itinerary.hashtags.map((hashtag, i) => (

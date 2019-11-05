@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchItineraries } from "../store/actions/itineraryActions";
 import ItineraryCard from "./itineraryCard";
+import { Link } from "react-router-dom";
 
 class MYtinerary extends React.Component {
   constructor(props) {
@@ -17,15 +18,28 @@ class MYtinerary extends React.Component {
     console.log(itineraries);
     // console.log(this.props);
     if (itineraries.length === 0) {
-      return <div>No Itineraries found in this city</div>;
+      return (
+        <div>
+          <p>No Itineraries found in this city</p>
+          <div>
+            <Link to="/cities">Choose another city</Link>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div>
-          <div className="cities-card">{itineraries[0].city_name}</div>
+          <div className="cities-card">
+            {" "}
+            <h3>{itineraries[0].city_name}</h3>
+          </div>
           <p>Available MYtineraries:</p>
           {itineraries.map(itinerary => (
             <ItineraryCard key={itinerary._id} itinerary={itinerary} />
           ))}
+          <div>
+            <Link to="/cities">Choose another city</Link>
+          </div>
         </div>
       );
     }

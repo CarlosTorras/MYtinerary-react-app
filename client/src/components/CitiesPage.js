@@ -31,7 +31,7 @@ class Cities extends React.Component {
       );
     });
     if (filteredCities.length === 0) {
-      return <div>Loading...</div>;
+      return <div className="lds-hourglass"></div>;
     } else {
       return (
         <div>
@@ -53,7 +53,7 @@ class Cities extends React.Component {
               to={"/itineraries/" + city._id}
             >
               <div className="cities-card" key={city._id}>
-                {city.city}
+                <h3>{city.city}</h3>
               </div>
             </Link>
           ))}
