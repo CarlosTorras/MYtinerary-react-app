@@ -7,12 +7,19 @@ import { Link } from "react-router-dom";
 class MYtinerary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedItinerary: ""
+    };
   }
 
   componentDidMount() {
     this.props.fetchItineraries(this.props.match.params.city_id);
   }
+
+  changeSelectedItinerary = itinId => {
+    this.setState({ selectedItinerary: itinId });
+  };
+
   render() {
     const { itineraries } = this.props.itineraries;
     console.log(itineraries);
@@ -35,7 +42,12 @@ class MYtinerary extends React.Component {
           </div>
           <p>Available MYtineraries:</p>
           {itineraries.map(itinerary => (
-            <ItineraryCard key={itinerary._id} itinerary={itinerary} />
+            <ItineraryCard
+              key={itinerary._id}
+              itinerary={itinerary}
+              selectedItinerary={this.state.selectedItinerary}
+              changeSelectedItinerary={this.changeSelectedItinerary}
+            />
           ))}
           <div>
             <Link to="/cities">Choose another city</Link>
