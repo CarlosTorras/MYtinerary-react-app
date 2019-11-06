@@ -1,5 +1,6 @@
 import React from "react";
 // material UI imports
+import TextField from "@material-ui/core/TextField";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -29,33 +30,36 @@ class SignUp extends React.Component {
         <h1>Sign In page</h1>
         <form>
           <div>
-            <label htmlFor="email">Email adress: </label>
-            <input
+            <TextField
               name="email"
-              type="text"
-              id="email"
+              className="input"
+              label="Email adress"
+              margin="normal"
+              variant="outlined"
               value={this.props.email}
               onChange={this.handleInputChange}
             />
           </div>
 
           <div>
-            <label htmlFor="userName">User name: </label>
-            <input
+            <TextField
               name="userName"
-              id="userName"
-              type="text"
+              className="input"
+              label="User name"
+              margin="normal"
+              variant="outlined"
               value={this.props.userName}
               onChange={this.handleInputChange}
             />
           </div>
 
           <div>
-            <label htmlFor="password">Password: </label>
-            <input
+            <TextField
               name="password"
-              id="password"
-              type="text"
+              className="input"
+              label="Password"
+              margin="normal"
+              variant="outlined"
               value={this.props.password}
               onChange={this.handleInputChange}
             />

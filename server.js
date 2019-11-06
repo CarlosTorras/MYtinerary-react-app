@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 const cityRouter = require("./cities");
 const itineraryRouter = require("./itineraries");
 const activityRouter = require("./activities");
+const userRouter = require("./users");
 const mongoose = require("mongoose");
+const config = require("config");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import the MongoDB Key
-const db = require("./keys").mongoURI;
+const db = config.get("mongoURI");
 
 // Connection of MongoDB Database with Express, trhought Mongoose
 mongoose
@@ -21,9 +23,11 @@ mongoose
   .then(() => console.log("Connection to Mongo DB established"))
   .catch(err => console.log(err));
 
+// Routes
 app.use("/cities", cityRouter);
 app.use("/itineraries", itineraryRouter);
 app.use("/activities", activityRouter);
+app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send({ express: "Hello From Express" });
