@@ -1,12 +1,15 @@
 // Connection of express
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const config = require("config");
+
+// Routes files import
 const cityRouter = require("./cities");
 const itineraryRouter = require("./itineraries");
 const activityRouter = require("./activities");
 const userRouter = require("./users");
-const mongoose = require("mongoose");
-const config = require("config");
+const authRouter = require("./auth");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,20 +31,6 @@ app.use("/cities", cityRouter);
 app.use("/itineraries", itineraryRouter);
 app.use("/activities", activityRouter);
 app.use("/users", userRouter);
-
-app.get("/", (req, res) => {
-  res.send({ express: "Hello From Express" });
-});
-
-app.get("/test", (req, res) => {
-  res.send({ express: "Hello test biatches" });
-});
-
-app.post("/api/world", (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`
-  );
-});
+app.use("/auth", authRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

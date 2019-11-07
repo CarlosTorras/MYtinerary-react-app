@@ -1,6 +1,7 @@
 const cityModel = require("./model/cityModel");
 const express = require("express");
 const router = express.Router();
+const auth = require("./middleware/auth");
 
 /*get all cities*/
 router.get("/", (req, res) => {
@@ -12,9 +13,9 @@ router.get("/", (req, res) => {
     .catch(err => console.log(err));
 });
 
-// post cities
+// post cities (private)
 
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   const newCity = new cityModel({
     city: req.body.city,
     country: req.body.country

@@ -4,80 +4,61 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
 
-/*get all cities*/
-router.get("/", (req, res) => {
-  userModel
-    .find({})
-    .then(files => {
-      res.send(files);
-    })
-    .catch(err => console.log(err));
-});
+// post user
 
-// post cities
+router.post(
+  "/",
+  [
+    check("username").isLength({ min: 3 }),
+    check("email").isEmail(),
+    check("password").isLength({ min: 5 })
+  ],
+  (req, res) => {
+    // Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
 
-router.post("/", (req, res) => {
-  const { name, email, password } = req.body;
+    // Check for existing user
+    userModel.findOne({ email }).then(user => {
+      if (user) return res.status(400).json({ msg: "User already exists" });
 
-  //   simple validation
-  if (!name || !email || !password) {
-    return res.status(400).json({ msg: "Please enter all fields" });
-  }
+      const newUser = new userModel({
+        email: req.body.email,
+        name: req.body.name,
+        password: req.body.password
+      });
 
-  // Check for existing user
-  userModel.findOne({ email }).then(user => {
-    if (user) return res.status(400).json({ msg: "User already exists" });
-
-    const newUser = new userModel({
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password
-    });
-
-    //   Create salt & hash
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser.save().then(user => {
-          jwt.sign(
-            { _id: user._id },
-            config.get("jwtSecret"),
-            //   {expiresIn: 3600},
-            (err, token) => {
-              if (err) throw err;
-              res.json({
-                token,
-                user: {
-                  _id: user._id,
-                  name: user.name,
-                  email: user.email
-                }
-              });
-            }
-          );
+      //   Create salt & hash
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser.save().then(user => {
+            jwt.sign(
+              { _id: user._id },
+              config.get("jwtSecret"),
+              { expiresIn: 3600 },
+              (err, token) => {
+                if (err) throw err;
+                res.json({
+                  token,
+                  user: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email
+                  }
+                });
+              }
+            );
+          });
         });
       });
     });
-  });
-});
+  }
+);
 
 module.exports = router;
-
-//   userModel.find({}).then(files => {
-//     for (i = 0; i < files.length; i++) {
-//       if (files[i].email == newUser.email) {
-//         console.log("this user already exists");
-//       } else {
-//         newUser
-//           .save()
-//           .then(user => {
-//             res.send(user);
-//           })
-//           .catch(err => {
-//             res.status(500).send("Server error");
-//           });
-//       }
-//     }
-//   });
