@@ -11,19 +11,20 @@ const { check, validationResult } = require("express-validator");
 router.post(
   "/",
   [
-    check("username").isLength({ min: 3 }),
+    check("name").isLength({ min: 3 }),
     check("email").isEmail(),
     check("password").isLength({ min: 5 })
   ],
   (req, res) => {
     // Validation
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
     // Check for existing user
-    userModel.findOne({ email }).then(user => {
+    userModel.findOne({ email: req.body.email }).then(user => {
       if (user) return res.status(400).json({ msg: "User already exists" });
 
       const newUser = new userModel({

@@ -46,7 +46,8 @@ router.post("/", (req, res) => {
 
 // get auth/user to get user data (private)
 router.get("/user", auth, (req, res) => {
-  User.findById(req.user._id)
+  userModel
+    .findById(req.user._id)
     .select("-password")
     .then(user => res.json(user));
 });

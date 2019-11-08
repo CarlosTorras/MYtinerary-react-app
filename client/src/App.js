@@ -8,11 +8,13 @@ import SignUp from "./components/SignUpPage";
 import LogIn from "./components/LogInPage";
 import MYtinerary from "./components/MYtineraryPage";
 import { loadUser } from "./store/actions/authActions";
-import store from "./store";
+import { connect } from "react-redux";
 
-class App extends Component {
+class App extends React.Component {
   componentDidMount() {
-    store.dispatch(loadUser());
+    console.log(this.props);
+    // this.props.store.dispatch(loadUser());
+    this.props.loadUser();
   }
 
   render() {
@@ -35,4 +37,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  null,
+  { loadUser }
+)(App);

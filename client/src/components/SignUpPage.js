@@ -1,20 +1,34 @@
 import React from "react";
 // material UI imports
 import TextField from "@material-ui/core/TextField";
+import { register } from "../store/actions/authActions";
+import { connect } from "react-redux";
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      userName: "",
-      password: ""
+      name: "",
+      password: "",
+      msg: null
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      // Check for registration error
+      if (error.id === "REGISTER_FAIL") {
+        this.setState({ msg: error.msg.errors });
+      } else {
+        this.setState({ msg: null });
+      }
+    }
   }
 
   //  Inputs functions
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -22,13 +36,42 @@ class SignUp extends React.Component {
     this.setState({
       [name]: value
     });
-  }
+  };
+
+  // function to submit the user info
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(this.state);
+    const { name, email, password } = this.state;
+
+    // Create user object
+    const newUser = {
+      name,
+      email,
+      password
+    };
+
+    // Attempt to register
+    this.props.register(newUser);
+  };
 
   render() {
     return (
       <div>
         <h1>Sign In page</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <TextField
+              name="name"
+              className="input"
+              label="User name"
+              margin="normal"
+              variant="outlined"
+              value={this.props.name}
+              onChange={this.handleInputChange}
+            />
+          </div>
+
           <div>
             <TextField
               name="email"
@@ -37,18 +80,6 @@ class SignUp extends React.Component {
               margin="normal"
               variant="outlined"
               value={this.props.email}
-              onChange={this.handleInputChange}
-            />
-          </div>
-
-          <div>
-            <TextField
-              name="userName"
-              className="input"
-              label="User name"
-              margin="normal"
-              variant="outlined"
-              value={this.props.userName}
               onChange={this.handleInputChange}
             />
           </div>
@@ -71,4 +102,12 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  error: state.error
+});
+
+export default connect(
+  mapStateToProps,
+  { register }
+)(SignUp);
