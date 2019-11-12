@@ -3,6 +3,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { register } from "../store/actions/authActions";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -55,10 +56,18 @@ class SignUp extends React.Component {
     this.props.register(newUser);
   };
 
+  // Redirect to home page
+  renderRedirect = () => {
+    if (this.props.auth.user) {
+      return <Redirect to="/" />;
+    }
+  };
+
   render() {
     return (
       <div>
         <h1>Sign In page</h1>
+        {this.renderRedirect()}
         <form onSubmit={this.handleSubmit}>
           <div>
             <TextField

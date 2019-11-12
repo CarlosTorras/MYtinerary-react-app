@@ -12,7 +12,9 @@ class Cities extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.props.fetchCities();
+    console.log(this.props);
   }
 
   handleChange = e => {

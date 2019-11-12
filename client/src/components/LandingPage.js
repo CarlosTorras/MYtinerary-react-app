@@ -16,12 +16,6 @@ class Landing extends React.Component {
         <Link to="/cities">
           <img className="link-img" src={browsingIcon} alt="browsing Icon" />
         </Link>
-
-        <p>Want to build your own Mytinerary?</p>
-        <div className="user-links">
-          <Link to="/login">Log in</Link>
-          <Link to="/signup">Create Account</Link>
-        </div>
       </div>
     );
   }
